@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"log"
 )
 
 func hello(w http.ResponseWriter, req *http.Request) {
@@ -10,6 +11,8 @@ func hello(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	addr := ":8080"
 	http.HandleFunc("/", hello)
-	http.ListenAndServe(":8080", nil)
+    log.Println("listen on", addr)
+    log.Fatal( http.ListenAndServe(addr, nil) )
 }
