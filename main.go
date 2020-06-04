@@ -6,6 +6,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -53,8 +54,9 @@ func getVotes(client *redis.Client, ctx context.Context) int {
 }
 
 func newConnection(req *http.Request) (*redis.Client, context.Context) {
+	redisHost := os.Getenv("REDIS_HOST")
 	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     fmt.Sprintf("%s:6379", redisHost),
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
