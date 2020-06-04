@@ -8,7 +8,7 @@ ensure-build-dir:
 	mkdir -p out
 
 build-deps: ## Install dependencies
-	go install -mod=vendor
+	go install -mod=mod
 	go mod tidy
 	go mod vendor
 
