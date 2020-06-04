@@ -15,6 +15,10 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "hello\n")
 }
 
+func ping(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "pong\n")
+}
+
 func vote(w http.ResponseWriter, req *http.Request) {
 
 	client, ctx := newConnection(req)
@@ -71,6 +75,7 @@ func newConnection(req *http.Request) (*redis.Client, context.Context) {
 func main() {
 	addr := ":8080"
 	http.HandleFunc("/", hello)
+	http.HandleFunc("/ping", ping)
 	http.HandleFunc("/vote", vote)
 	log.Println("listen on", addr)
 	log.Fatal(http.ListenAndServe(addr, nil))
