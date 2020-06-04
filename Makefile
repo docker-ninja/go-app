@@ -12,12 +12,12 @@ build-deps: ## Install dependencies
 	go mod tidy
 	go mod vendor
 
-build: ensure-build-dir build-deps compile ## Build the application for mac
+build: ensure-build-dir compile ## Build the application for mac
 
-build-linux: ensure-build-dir build-deps compile ## Build the application for linux
+build-linux: ensure-build-dir compile-linux ## Build the application for linux
 
 compile: ## Compile for mac
 	go build -mod=vendor -o ./out/$(APP_NAME) ./main.go
 
 compile-linux: ensure-build-dir ## Compile go-app for linux
-	GOOS=linux GOARCH=amd64 $(GO_BINARY) build -mod=vendor -o ./out/$(APP_NAME) ./main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -mod=vendor -o ./out/$(APP_NAME) ./main.go
